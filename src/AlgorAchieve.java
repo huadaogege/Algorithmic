@@ -29,8 +29,10 @@ public class AlgorAchieve {
 			System.out.println("************");
 			for (int j = i+1; j < N; j++) {
 				show(a);
-				if (less(a[j], a[min])) min = j;
-					exch(a, i, min);
+				if (less(a[j], a[min])) {
+					min = j;
+				}
+				exch(a, i, min);
 			}
 		}
 	}
@@ -51,9 +53,11 @@ public class AlgorAchieve {
 		for (int i = 1; i < N; i++) {
 			show(a);
 			System.out.println("*******");
-			for (int j = i; j > 0 && less(a[j], a[j - 1]); j--) {
-				show(a);
-				exch(a, j, j - 1);
+			for (int j = i; j > 0; j--) {
+				if (less(a[j], a[j - 1])) {
+					show(a);
+					exch(a, j, j - 1);
+				}
 			}
 		}
 	}
@@ -70,11 +74,15 @@ public class AlgorAchieve {
 	public static void shellSort (Comparable<Integer>[] a) {
 		int N = a.length;
 		int h = 1;
-		while (h < N/3) h=3*h + 1;
+		while (h < N/3) {
+			h=3*h + 1;
+		}
 		while (h >= 1) {
 			for (int i = h; i < N; i++) {
-				for (int j = i; j >= h && less(a[j], a[j-h]); j -= h) {
-					exch(a, j, j-h);
+				for (int j = i; j >= h; j -= h) {
+					if (less(a[j], a[j-h])) {
+						exch(a, j, j-h);
+					}
 				}
 			}
 			h = h/3;
