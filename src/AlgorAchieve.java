@@ -9,14 +9,12 @@ public class AlgorAchieve {
 	public static AlgorAchieve getInstance() {
 		return instance;
 	}
-	
-    
-	
+
 	/* 算法一:选择排序
 	 * 
 	 * 实现原理:首先遍历一遍数组,找到最小的一个元素和第一个元素换位，
-	 *        然后依次在剩余的元素中和第2，3...个元素换位，
-	 *        每一遍都只能确定一个元素的位置
+	 *         然后依次在剩余的元素中和第2，3...个元素换位，
+	 *         每一遍都只能确定一个元素的位置
 	 *        
 	 * 交换次数:(N-1)+(N-2)+...+2+1=N*(N-1)/2次比较
 	 *
@@ -31,10 +29,8 @@ public class AlgorAchieve {
 			System.out.println("************");
 			for (int j = i+1; j < N; j++) {
 				show(a);
-				if (less(a[j], a[min])) {
-					min = j;
+				if (less(a[j], a[min])) min = j;
 					exch(a, i, min);
-				}
 			}
 		}
 	}
@@ -42,8 +38,8 @@ public class AlgorAchieve {
 	/* 算法二:插入排序
 	 * 
 	 * 实现原理:类似给扑克牌洗牌的方式，为了要给插入的元素腾出空间，
-	 *        插入点右侧所有的元素都要向右移动，所以如果输入的顺序
-	 *        一本有序要比无需需要的时间少很多
+	 *         插入点右侧所有的元素都要向右移动，所以如果输入的顺序
+	 *         一本有序要比无需需要的时间少很多
 	 *        
 	 * 交换次数:最好的情况:N-1和0次交换，最坏的情况是(N*N)/2
 	 * 
@@ -61,6 +57,29 @@ public class AlgorAchieve {
 			}
 		}
 	}
+	
+	/* 算法三:希尔排序
+	 * 
+	 * 实现原理:以相邻h(第一次h一般设置为N/3)间隔的元素抽出来作为一个独立的数组，
+	 *         一个原始数组被切分为几个小数组，分别对这几个小数组进行插入排序，
+	 *         然后依次减小h的大小再次分别排序，直到h减小到1
+	 * 
+	 * 交换次数:
+	 * 
+	 * 基本特点:效率比较高，该算法权衡了数组的规模和有序性*/
+	public static void shellSort (Comparable<Integer>[] a) {
+		int N = a.length;
+		int h = 1;
+		while (h < N/3) h=3*h + 1;
+		while (h >= 1) {
+			for (int i = h; i < N; i++) {
+				for (int j = i; j >= h && less(a[j], a[j-h]); j -= h) {
+					exch(a, j, j-h);
+				}
+			}
+			h = h/3;
+		}
+	}
 	/***********************************公共算法使用方法*****************************************/
 	/* 比较大小*/	
 	public static boolean less (Comparable<Integer> v, Comparable<Integer> w) {
@@ -75,7 +94,7 @@ public class AlgorAchieve {
 	}
 	
 	/*列举数组里面所有元素*/
-	private static void show(Comparable<Integer>[] a) {
+	public static void show(Comparable<Integer>[] a) {
 		String arrayString = "";
 		for (int i = 0; i < a.length; i++) {
 			arrayString += a[i];
